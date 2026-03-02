@@ -1,0 +1,46 @@
+{
+  "instructions": "Follow the patterns and quality standards in CLAUDE.md. Flag any direct pushes or PRs that bypass the develop → staging → production promotion flow. Flag hardcoded secrets, .env files, or credentials in diffs.",
+  "commentTypes": ["logic", "syntax", "style"],
+  "strictness": 2,
+  "fixWithAI": true,
+  "triggerOnUpdates": true,
+  "includeBranches": ["develop", "staging", "production"],
+  "statusCheck": true,
+  "summarySection": {
+    "included": true,
+    "collapsible": true,
+    "defaultOpen": true
+  },
+  "issuesTableSection": {
+    "included": true,
+    "collapsible": true,
+    "defaultOpen": true
+  },
+  "sequenceDiagramSection": {
+    "included": false
+  },
+  "confidenceScoreSection": {
+    "included": true,
+    "collapsible": true,
+    "defaultOpen": false
+  },
+  "customContext": {
+    "rules": [
+      {
+        "rule": "If this PR targets production, verify the source branch is staging. Flag TODOs, FIXME, HACK, console.log, and any WIP markers as errors."
+      },
+      {
+        "rule": "If this PR targets staging, verify the source branch is develop. Warn if it comes from a feature branch directly."
+      },
+      {
+        "rule": "Never approve PRs that include .env files, hardcoded API keys, tokens, or database credentials."
+      }
+    ],
+    "files": [
+      {
+        "path": "CLAUDE.md",
+        "description": "Project conventions, patterns, and quality standards"
+      }
+    ]
+  }
+}
