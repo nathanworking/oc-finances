@@ -1,0 +1,16 @@
+# Adjust commands for your package manager (pnpm / bun / npm)
+pre-commit:
+  parallel: true
+  commands:
+    lint-staged:
+      glob: "*.{ts,tsx,js,jsx}"
+      run: npx eslint {staged_files}
+
+pre-push:
+  parallel: false
+  commands:
+    typecheck:
+      run: npx tsc --noEmit
+    build:
+      # Change to: bun run build / npm run build / pnpm build
+      run: pnpm build
